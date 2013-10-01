@@ -31,6 +31,8 @@
 <template name="list">
   {{#each urls}}
   <li><a href="{{url}}">{{displayName}} ({{url}})</a></li>
+  {{else}}
+  You have no saved Urls yet. Save one !
   {{/each}}
 </template>
 <template name="saveUrlOld">
