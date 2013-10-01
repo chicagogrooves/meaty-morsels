@@ -24,8 +24,8 @@ Router.map(function() {
 
 if (Meteor.isClient) {
   Template.home.saverUrl = function(){ 
-    //return "http://meaty-morsels.meteor.com/saveUrl?url=";
-    return "http://localhost:3000/saveUrl?" + 
+    //return "http://localhost:3000/saveUrl?" + 
+    return "http://meaty-morsels.meteor.com/saveUrl?" +
        "userId=" + Meteor.userId() + 
        "&url=";
   }
