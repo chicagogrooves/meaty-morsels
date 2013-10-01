@@ -30,26 +30,47 @@ Router.map(function() {
     
     Urls.insert({
       userId: this.request.query.userId,
-      url: this.request.query.urlSaved
+      url: this.request.query.urlSaved,
+      name: this.request.query.name
     });
     this.response.write('didit({"urlSaved": "' + this.request.query.urlSaved + '"});')
   });
+
+  this.route('list', {path:'/mine'});
   
   this.route('home', {path:'/'});
 });
 
 
 if (Meteor.isClient) {
-  Template.home.saverUrl = function(){ 
-    return "http://localhost:3000/saveUrl"; 
+  Meteor.subscribe('urls');
+  
+  var saverUrl = function(){
+    return window.location.origin + '/saveUrl';
+    //return "http://localhost:3000/saveUrl";
+    //return "http://meaty-morsels.meteor.com/saveUrl"
   }
+  $.extend(Template.home, {
+    saverUrl: saverUrl,
+    saverIsLocal: function(){ return saverUrl().indexOf('localhost')>-1 }
+  });
+
   Template.home.userInfo = function(){
     return Meteor.userId();
+  }
+  Template.list.urls = function(){
+    return Urls.find().map( function(url){ 
+      url.displayName = function(){ return this.name || this.url};
+      return url;
+    });
   }
 }
 
 if (Meteor.isServer) {
   Meteor.startup(function () {
     // code to run on server at startup
+    Meteor.publish('urls', function(){
+      return Urls.find( {userId: this.userId});
+    })
   });
 }
