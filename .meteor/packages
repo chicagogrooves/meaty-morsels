@@ -8,7 +8,6 @@ insecure
 preserve-inputs
 bootstrap
 iron-router
-accounts-meetup
 accounts-ui
 accounts-base
 accounts-facebook
